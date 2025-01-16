@@ -4160,9 +4160,10 @@ var htmx = (function() {
    * @param {Event} event
    * @param {HtmxAjaxEtc} [etc]
    * @param {boolean} [confirmed]
+   * @param {string|undefined} promptResponse
    * @return {Promise<void>}
    */
-  function issueAjaxRequest(verb, path, elt, event, etc, confirmed) {
+  function issueAjaxRequest(verb, path, elt, event, etc, confirmed, promptResponse) {
     let resolve = null
     let reject = null
     etc = etc != null ? etc : {}
@@ -4304,7 +4305,7 @@ var htmx = (function() {
       }
     }
     const promptQuestion = getClosestAttributeValue(elt, 'hx-prompt')
-    if (promptQuestion) {
+    if (promptQuestion && !promptResponse) {
       var promptResponse = prompt(promptQuestion)
       // prompt returns null if cancelled and empty string if accepted with no entry
       if (promptResponse === null ||
